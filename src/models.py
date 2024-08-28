@@ -63,7 +63,7 @@ class Plan(Base):
     __tablename__ = "plans"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, unique=True, index=True)
+    title = Column(String, index=True)
     description = Column(String)
     renewal_period = Column(Integer)
 

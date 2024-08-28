@@ -1,12 +1,14 @@
 # importing required modules
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional
+import datetime
 
 
 # pydantic schema for UserCreate
 class UserCreate(BaseModel):
     username: str
-    email: str
+    # email: str
+    email: EmailStr
     password: str
 
 
@@ -19,6 +21,8 @@ class UserLogin(BaseModel):
 # schema for User password reset : with email, new password
 class UserResetPassword(BaseModel):
     email: str
+
+class NewPassword(BaseModel):
     new_password: str
 
 
@@ -53,13 +57,19 @@ class SubscriptionCreate(BaseModel):
     user_id: int
     magazine_id: int
     plan_id: int
+    price: float
+    # next_renewal_date: str
+    next_renewal_date: datetime.date
 
-    # mark all fields as read only and optional
+
+class SubscriptionResponse(BaseModel):
+    id: int
+    user_id: int
+    magazine_id: int
+    plan_id: int
+    price: float
+    next_renewal_date: datetime.date
+    is_active: bool
+
     class Config:
         orm_mode = True
-        arbitrary_types_allowed = True
-        allow_population_by_field_name = True
-        use_enum_values = True
-        validate_assignment = True
-        validate_all = True
-        validate_all_in_root = True
